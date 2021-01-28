@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.Search-Bar {
+  padding: 50px;
+}
+
+.Submit-Button {
+  height: 56px;
+}
