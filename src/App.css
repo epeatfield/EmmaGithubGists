@@ -44,3 +44,29 @@
 .Submit-Button {
   height: 56px;
 }
+
+.Table-Header {
+  background-color: #282c34;
+  color:antiquewhite;
+  font-size: 14px;
+}
+
+
+.Table-Cell {
+  color: antiquewhite;
+  font-size: 14px;
+}
+
+th.MuiTableCell-head {
+  color: antiquewhite;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+div.Table {
+  margin-top: 50px;
+}
+
+h1 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}

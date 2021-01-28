@@ -79,11 +79,11 @@ export default class Results extends Component<any, any> {
         return (
             <div>
                 {(this.state.filteredFavorites.length > 0) && (
-                    <div>
-                        Favorites
+                    <div className="Table">
+                        <h1>Favorites</h1>
                         <TableContainer component={Paper}>
                             <Table className={'table'} aria-label="simple table">
-                                <TableHead>
+                                <TableHead className={'Table-Header'}>
                                     <TableRow>
                                         <TableCell>ID</TableCell>
                                         <TableCell align="right">User</TableCell>
@@ -112,10 +112,11 @@ export default class Results extends Component<any, any> {
                     </div>
                 )}
                 {this.state.fetchedList.length > 0 && (
-                    <div>
+                    <div className="Table">
+                        <h1>Results</h1>
                         <TableContainer component={Paper}>
                             <Table className={'table'} aria-label="simple table">
-                                <TableHead>
+                                <TableHead className={'Table-Header'}>
                                     <TableRow>
                                         <TableCell>ID</TableCell>
                                         <TableCell align="right">User</TableCell>
@@ -129,8 +130,8 @@ export default class Results extends Component<any, any> {
                                             <TableCell component="th" scope="row">
                                                 {entry.id}
                                             </TableCell>
-                                            <TableCell align="right">{entry.url}</TableCell>
                                             <TableCell align="right">{entry.owner.login}</TableCell>
+                                            <TableCell align="right">{entry.url}</TableCell>
                                             <TableCell align="right">
                                                 <IconButton onClick={(e) => this.favoriteResult(e, index)}>
                                                     {this.inFavorites(entry.id) ? (<StarIcon />) : (<StarBorderIcon />)}
