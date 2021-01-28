@@ -15,15 +15,17 @@ export default class Results extends Component<any, any> {
             user: this.props.user,
             favorites: this.props.favoritesList,
             fetchedList: this.props.fetchedList,
+            filteredFavorites: []
         }
+
+        this.filterUserFavorites = this.filterUserFavorites.bind(this)
     }
 
     favoriteResult(e, index) {
-        const listItem = this.state.fetchedList[index]
-        if (this.inFavorites(listItem.id)) {
-            this.removeFavoriteResult(listItem)
+        if (this.inFavorites(this.state.fetchedList[index].id)) {
+            this.removeFavoriteResult(this.state.fetchedList[index])
         } else {
-            this.addFavoriteResult(listItem)
+            this.addFavoriteResult(this.state.fetchedList[index])
         }
     }
 
@@ -37,20 +39,21 @@ export default class Results extends Component<any, any> {
     }
 
     removeFavoriteResult(listItem) {
-        const currentFave = this.state.favorites;
-        if (currentFave) {
-            const removeIndex = currentFave.map(function(item) { 
-                return item.id; 
-            }).indexOf(listItem.id);
-            currentFave.splice(removeIndex, 1);
-            this.setState({favorites: currentFave}, this.saveFavorites)
-        } else {
-            return
+        let keys;
+        const currentStorage = this.state.favorites
+        if (currentStorage) { 
+            keys = currentStorage
+            var removeIndex = keys.map(function (item) { return item.id; }).indexOf(listItem.id);
+            keys.splice(removeIndex, 1)
+            this.setState({favorites: keys}, this.saveFavorites)
+        } else { 
+            keys = [];
+            return 
         }
     }
 
     addFavoriteResult(listItem) {
-        this.setState( { favorites: [...this.state.favorites, listItem] }, this.saveFavorites)
+        this.setState({ favorites: [...this.state.favorites, listItem] }, this.saveFavorites)
     }
 
     saveFavorites(k?) {
@@ -59,66 +62,87 @@ export default class Results extends Component<any, any> {
         } else {
             myStorage.setItem('favorites', JSON.stringify(this.state.favorites));
         }
+        this.props.fetch();
+        this.filterUserFavorites();
+    }
+
+    filterUserFavorites() {
+        const newList = this.state.favorites.filter(o => o.owner.login === this.state.user);
+        this.setState({filteredFavorites: newList})
+    }
+    
+    componentDidMount() {
+        this.filterUserFavorites();
     }
 
     render() {
         return (
             <div>
-                List! {this.state.user}
-                {/* Show Favorites on top */}
-                {this.state.favorites.length > 0 && (
-                    <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="left">User</TableCell>
-                            <TableCell align="left">Favorite</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.favorites.map(({id, owner, url}) => (
-                                <TableRow key={id}>
-                                    <TableCell component="th" scope="row">
-                                        {id}
-                                    </TableCell>
-                                    <TableCell align="left">{owner.login}</TableCell>
-                                    <TableCell align="left">
-                                        <IconButton>
-                                            <StarIcon></StarIcon>
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                {(this.state.filteredFavorites.length > 0) && (
+                    <div>
+                        Favorites
+                        <TableContainer component={Paper}>
+                            <Table className={'table'} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>ID</TableCell>
+                                        <TableCell align="right">User</TableCell>
+                                        <TableCell align="right">URL</TableCell>
+                                        <TableCell align="right">Favorite</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.filteredFavorites.map(({ id, url, owner }) => (
+                                        <TableRow key={id}>
+                                            <TableCell component="th" scope="row">
+                                                {id}
+                                            </TableCell>
+                                            <TableCell align="right"><a href={url}>{url}</a></TableCell>
+                                            <TableCell align="right">{owner.login}</TableCell>
+                                            <TableCell align="right">
+                                                <IconButton>
+                                                    {this.inFavorites(id) ? (<StarIcon />) : (<StarBorderIcon />)}
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
                 )}
-                {/* Results in Total */}
                 {this.state.fetchedList.length > 0 && (
-                    <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableCell>ID</TableCell>
-                            <TableCell align="left">User</TableCell>
-                            <TableCell align="left">Favorite</TableCell>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.fetchedList.map((entry, index) => (
-                                <TableRow key={entry.id}>
-                                    <TableCell component="th" scope="row">
-                                        {entry.id}
-                                    </TableCell>
-                                    <TableCell align="left">{entry.owner.login}</TableCell>
-                                    <TableCell align="left">
-                                        <IconButton id="fetchedList" onClick={(e)=>this.favoriteResult(e, index)}>
-                                            {this.inFavorites(entry.id) ? (<StarIcon/>) : (<StarBorderIcon/>)}
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                )}
+                    <div>
+                        <TableContainer component={Paper}>
+                            <Table className={'table'} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>ID</TableCell>
+                                        <TableCell align="right">User</TableCell>
+                                        <TableCell align="right">URL</TableCell>
+                                        <TableCell align="right">Favorite</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.fetchedList.map((entry, index) => (
+                                        <TableRow key={entry.id}>
+                                            <TableCell component="th" scope="row">
+                                                {entry.id}
+                                            </TableCell>
+                                            <TableCell align="right">{entry.url}</TableCell>
+                                            <TableCell align="right">{entry.owner.login}</TableCell>
+                                            <TableCell align="right">
+                                                <IconButton onClick={(e) => this.favoriteResult(e, index)}>
+                                                    {this.inFavorites(entry.id) ? (<StarIcon />) : (<StarBorderIcon />)}
+                                                </IconButton></TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                )
+                }
             </div>
         )
     }

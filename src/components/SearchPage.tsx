@@ -17,10 +17,11 @@ export default class SearchPage extends Component<any, any>{
         }
         this.handleClick = this.handleClick.bind(this)
         this.fetchFavorites = this.fetchFavorites.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange(e) {
-        this.setState({ username: e.target.value })
+        this.setState({ username: e.target.value , showList: false })
     }
 
     handleClick(e) {
@@ -69,6 +70,7 @@ export default class SearchPage extends Component<any, any>{
                         user={this.state.username} 
                         favoritesList={this.state.favorites}
                         fetchedList={this.state.fetchedList}
+                        fetch={this.fetchFavorites}
                     />) : null}
             </div>
         )
