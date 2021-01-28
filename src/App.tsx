@@ -7,6 +7,11 @@ import Header from './components/Header';
 import Error from './components/Error';
 import About from './components/About';
 
+/**
+ * Main Application function that sets up routes and the Header for each page.
+ */
+
+
 export default function App() {
   return (
     <div className="App">

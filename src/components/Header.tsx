@@ -11,6 +11,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {Link} from 'react-router-dom';
 
+/**
+ * Header that creates the navbar. This was mostly taken from 
+ * Material UI documentation.
+ */
+
 const NavBarLinks = links.links;
 
 const useStyles = makeStyles((theme: Theme) =>

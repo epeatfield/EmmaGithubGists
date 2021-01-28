@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-//Error page, if any unknown url is accessed
+/**
+ * Error page, if any unknown url is accessed
+ */
 
 const Error = () => (
   <div>

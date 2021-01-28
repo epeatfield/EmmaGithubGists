@@ -6,6 +6,12 @@ import {
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 
+/**
+ * Results component that shows the tables when they have entries
+ * after a user has entered a valid search field. This component 
+ * also handles some of the favoriting logic within the tables.
+ */
+
 const myStorage = window.localStorage;
 
 export default class Results extends Component<any, any> {

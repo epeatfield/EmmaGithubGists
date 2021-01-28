@@ -3,6 +3,13 @@ import React, { Component } from 'react';
 import { Octokit } from '@octokit/rest';
 import Results from './Results';
 
+/**
+ * Search parent component that is used for the search bar &
+ * submit button. Once a valid search has been done, this component
+ * will show the Results comoponent with the tables.
+ */
+
+
 const gg = new Octokit();
 const myStorage = window.localStorage; 
 

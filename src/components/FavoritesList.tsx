@@ -5,6 +5,13 @@ import {
 } from '@material-ui/core'
 import StarIcon from '@material-ui/icons/Star';
 
+/**
+ * This component is the primary page for listing the Favorites. It
+ * lists the gists as a whole that have been favorited, and allows the user
+ * to unfavorite if they choose to do so. The table lists the ID, description, 
+ * owner, and URL for each favorited gist.
+ */
+
 const myStorage = window.localStorage;
 
 export class FavoritesList extends Component<any, any>{
