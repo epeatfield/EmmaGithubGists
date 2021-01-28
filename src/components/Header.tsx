@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
 import links from './../constants/links.json';
 import AppBar from '@material-ui/core/AppBar';
