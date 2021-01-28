@@ -109,7 +109,7 @@ export default class Results extends Component<any, any> {
                                     </TableCell>
                                     <TableCell align="left">{entry.owner.login}</TableCell>
                                     <TableCell align="left">
-                                        <IconButton onClick={(e)=>this.favoriteResult(e, index)}>
+                                        <IconButton id="fetchedList" onClick={(e)=>this.favoriteResult(e, index)}>
                                             {this.inFavorites(entry.id) ? (<StarIcon/>) : (<StarBorderIcon/>)}
                                         </IconButton>
                                     </TableCell>
