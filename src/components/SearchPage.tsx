@@ -64,7 +64,12 @@ export default class SearchPage extends Component<any, any>{
                         onChange={(e) => this.handleChange(e)} />
                     <Button className="Submit-Button" variant="contained" onClick={(e) => this.handleClick(e)}>Search</Button>
                 </form>
-                {this.state.showList ? (<Results user={this.state.username} />) : null}
+                {this.state.showList ? (
+                    <Results 
+                        user={this.state.username} 
+                        favoritesList={this.state.favorites}
+                        fetchedList={this.state.fetchedList}
+                    />) : null}
             </div>
         )
     }
