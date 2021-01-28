@@ -35,7 +35,7 @@ export default class SearchPage extends Component<any, any>{
         }).then((response: any) => {
             const listUser = response.data.filter(o => o.owner.login === this.state.username);
             this.setState({ fetchedList: listUser, showList: true })
-        })
+        }).catch(err => alert(err))
     }
 
     componentDidMount() {
