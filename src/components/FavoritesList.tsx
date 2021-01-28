@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { 
-    Table, TableBody, TableCell, TableContainer, 
+import {
+    Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, IconButton, Paper
 } from '@material-ui/core'
 import StarIcon from '@material-ui/icons/Star';
@@ -66,6 +66,7 @@ export class FavoritesList extends Component<any, any>{
                                 <TableRow>
                                     <TableCell>ID</TableCell>
                                     <TableCell align="right">User</TableCell>
+                                    <TableCell align="right">Description</TableCell>
                                     <TableCell align="right">URL</TableCell>
                                     <TableCell align="right">Favorite</TableCell>
                                 </TableRow>
@@ -76,8 +77,9 @@ export class FavoritesList extends Component<any, any>{
                                         <TableCell component="th" scope="row">
                                             {entry.id}
                                         </TableCell>
-                                        <TableCell align="right"><a href={entry.url}>{entry.url}</a></TableCell>
                                         <TableCell align="right">{entry.owner.login}</TableCell>
+                                        <TableCell align="right">{entry.description}</TableCell>
+                                        <TableCell align="right"><a href={entry.html_url} target="_blank" rel="noreferrer">Click to open Gist.</a></TableCell>
                                         <TableCell align="right">
                                             <IconButton onClick={() => this.removeFavorites(this.state.favorites[index])}>
                                                 <StarIcon />

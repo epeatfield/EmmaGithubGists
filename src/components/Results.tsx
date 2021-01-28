@@ -39,15 +39,12 @@ export default class Results extends Component<any, any> {
     }
 
     removeFavoriteResult(listItem) {
-        let keys;
-        const currentStorage = this.state.favorites
+        let currentStorage = this.state.favorites
         if (currentStorage) { 
-            keys = currentStorage
-            var removeIndex = keys.map(function (item) { return item.id; }).indexOf(listItem.id);
-            keys.splice(removeIndex, 1)
-            this.setState({favorites: keys}, this.saveFavorites)
+            var removeIndex = currentStorage.map(function (item) { return item.id; }).indexOf(listItem.id);
+            currentStorage.splice(removeIndex, 1)
+            this.setState({favorites: currentStorage}, this.saveFavorites)
         } else { 
-            keys = [];
             return 
         }
     }
@@ -87,21 +84,23 @@ export default class Results extends Component<any, any> {
                                     <TableRow>
                                         <TableCell>ID</TableCell>
                                         <TableCell align="right">User</TableCell>
+                                        <TableCell align="right">Description</TableCell>
                                         <TableCell align="right">URL</TableCell>
                                         <TableCell align="right">Favorite</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {this.state.filteredFavorites.map(({ id, url, owner }) => (
-                                        <TableRow key={id}>
+                                    {this.state.filteredFavorites.map((entry, index) => (
+                                        <TableRow key={entry.id}>
                                             <TableCell component="th" scope="row">
-                                                {id}
+                                                {entry.id}
                                             </TableCell>
-                                            <TableCell align="right"><a href={url}>{url}</a></TableCell>
-                                            <TableCell align="right">{owner.login}</TableCell>
+                                            <TableCell align="right">{entry.owner.login}</TableCell>
+                                            <TableCell align="right">{entry.description}</TableCell>
+                                            <TableCell align="right"><a href={entry.html_url} target="_blank" rel="noreferrer">Click to open Gist.</a></TableCell>
                                             <TableCell align="right">
-                                                <IconButton>
-                                                    {this.inFavorites(id) ? (<StarIcon />) : (<StarBorderIcon />)}
+                                                <IconButton onClick={(e) => this.removeFavoriteResult(entry)}>
+                                                    {this.inFavorites(entry.id) ? (<StarIcon />) : (<StarBorderIcon />)}
                                                 </IconButton>
                                             </TableCell>
                                         </TableRow>
@@ -120,6 +119,7 @@ export default class Results extends Component<any, any> {
                                     <TableRow>
                                         <TableCell>ID</TableCell>
                                         <TableCell align="right">User</TableCell>
+                                        <TableCell align="right">Description</TableCell>
                                         <TableCell align="right">URL</TableCell>
                                         <TableCell align="right">Favorite</TableCell>
                                     </TableRow>
@@ -131,11 +131,13 @@ export default class Results extends Component<any, any> {
                                                 {entry.id}
                                             </TableCell>
                                             <TableCell align="right">{entry.owner.login}</TableCell>
-                                            <TableCell align="right">{entry.url}</TableCell>
+                                            <TableCell align="right">{entry.description}</TableCell>
+                                            <TableCell align="right"><a href={entry.html_url} target="_blank" rel="noreferrer">Click to open Gist.</a></TableCell>
                                             <TableCell align="right">
                                                 <IconButton id="fetchedList" onClick={(e) => this.favoriteResult(e, index)}>
                                                     {this.inFavorites(entry.id) ? (<StarIcon />) : (<StarBorderIcon />)}
-                                                </IconButton></TableCell>
+                                                </IconButton>
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

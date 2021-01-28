@@ -74,3 +74,10 @@ h1 {
 div.MuiContainer-root{
   width: auto;
 }
+
+p.about-me {
+  width: 50%;
+  margin: auto;
+  padding: 20px; 
+  line-height: 1.6;
+}
