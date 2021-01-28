@@ -17,13 +17,57 @@ export default class Results extends Component<any, any> {
             fetchedList: this.props.fetchedList,
         }
     }
+
+    favoriteResult(e, index) {
+        const listItem = this.state.fetchedList[index]
+        if (this.inFavorites(listItem.id)) {
+            this.removeFavoriteResult(listItem)
+        } else {
+            this.addFavoriteResult(listItem)
+        }
+    }
+
+    inFavorites(id: string) { 
+        for (let f of this.state.favorites) {
+            if (f.id === id) {
+                return true
+            }
+        }
+        return false
+    }
+
+    removeFavoriteResult(listItem) {
+        const currentFave = this.state.favorites;
+        if (currentFave) {
+            const removeIndex = currentFave.map(function(item) { 
+                return item.id; 
+            }).indexOf(listItem.id);
+            currentFave.splice(removeIndex, 1);
+            this.setState({favorites: currentFave}, this.saveFavorites)
+        } else {
+            return
+        }
+    }
+
+    addFavoriteResult(listItem) {
+        this.setState( { favorites: [...this.state.favorites, listItem] }, this.saveFavorites)
+    }
+
+    saveFavorites(k?) {
+        if (k) {
+            myStorage.setItem('favorites', JSON.stringify(k));
+        } else {
+            myStorage.setItem('favorites', JSON.stringify(this.state.favorites));
+        }
+    }
+
     render() {
         return (
             <div>
                 List! {this.state.user}
                 {/* Show Favorites on top */}
                 {this.state.favorites.length > 0 && (
-                    <TableContainer>
+                    <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableCell>ID</TableCell>
@@ -36,10 +80,10 @@ export default class Results extends Component<any, any> {
                                     <TableCell component="th" scope="row">
                                         {id}
                                     </TableCell>
-                                    <TableCell align="center">{owner.login}</TableCell>
-                                    <TableCell align="center">
+                                    <TableCell align="left">{owner.login}</TableCell>
+                                    <TableCell align="left">
                                         <IconButton>
-                                            <StarBorderIcon></StarBorderIcon>
+                                            <StarIcon></StarIcon>
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
@@ -50,7 +94,7 @@ export default class Results extends Component<any, any> {
                 )}
                 {/* Results in Total */}
                 {this.state.fetchedList.length > 0 && (
-                    <TableContainer>
+                    <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableCell>ID</TableCell>
@@ -65,8 +109,8 @@ export default class Results extends Component<any, any> {
                                     </TableCell>
                                     <TableCell align="left">{entry.owner.login}</TableCell>
                                     <TableCell align="left">
-                                        <IconButton>
-                                            <StarBorderIcon></StarBorderIcon>
+                                        <IconButton onClick={(e)=>this.favoriteResult(e, index)}>
+                                            {this.inFavorites(entry.id) ? (<StarIcon/>) : (<StarBorderIcon/>)}
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
