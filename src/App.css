@@ -70,3 +70,7 @@ div.Table {
 h1 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
+
+div.MuiContainer-root{
+  width: auto;
+}

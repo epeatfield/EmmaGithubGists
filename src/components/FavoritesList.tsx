@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import { 
     Table, TableBody, TableCell, TableContainer, 
     TableHead, TableRow, IconButton, Paper
