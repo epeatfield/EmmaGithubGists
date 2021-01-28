@@ -5,8 +5,7 @@ import {shallow} from 'enzyme';
 
 describe('<App />', () => {
   const mt = shallow(<App />);
-  it('Test link', () => {
-    const link = mt.find('a').text();
+  it('Test Snapshot', () => {
     expect(mt).toMatchSnapshot();
   });
 });
