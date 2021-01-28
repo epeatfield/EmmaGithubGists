@@ -7,12 +7,6 @@ describe('<App />', () => {
   const mt = shallow(<App />);
   it('Test link', () => {
     const link = mt.find('a').text();
-    console.log(link)
+    expect(mt).toMatchSnapshot();
   });
 });
-
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });

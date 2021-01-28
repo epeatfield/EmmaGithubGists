@@ -1,23 +1,18 @@
 import React from 'react';
+import { MainPage } from './components/MainPage';
+import { Switch, Route } from 'react-router-dom';
+import { FavoritesList } from './components/FavoritesList';
+import Header from './components/Header';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Header/>
+        <Switch>
+          <Route exact component={MainPage} path='/' />
+          <Route exact component={FavoritesList} path='/favorites' />
+        </Switch>
     </div>
   );
-}
 
-export default App;
+}
